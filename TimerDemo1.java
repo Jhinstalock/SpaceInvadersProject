@@ -4,93 +4,143 @@ import javax.swing.*;
 
 public class TimerDemo1 extends JFrame implements KeyListener
 {
-   private Timer enemyTimer;        // propels top enemy horizontally across screen
-   private Timer playerTimer;       // propels bottom player horizontally across screen
-   private Timer timerBullet;       // propels bottom player's bullet vertically up the screen
-   private int playerX;             // the x location of player
-   private int enemyX;              // the x location of enemy
-   private int bulletY;             // the y location of player's bullet
-   private int bulletX;             // the x location of player's bullet
-   private int enemyMoveAmount;     // the enemy's horizontal move amount in each timer step
-   private int playerMoveAmount;    // the player's horizontal move amount in each timer step
-   private int bulletMoveAmount;    // the bullet's vertical move amount in each timer step
-   private int playerScore;         // player score
-   private final static int SCREEN_WIDTH = 300;   // width of screen
+   private Timer enemy1Timer;
+   private Timer enemy2Timer;
+   private Timer enemy3Timer;
+   private Timer enemy4Timer;
+   private Timer enemy5Timer;           
+   private Timer playerTimer;       
+   private Timer timerBullet;
+          
+   private int playerX; //don't need a Y - player moves horizontally only.
+                
+   private int enemy1X;
+   private int enemy2X;
+   private int enemy3X;
+   private int enemy4X;
+   private int enemy5X;
+   
+   private int enemy1Y;
+   private int enemy2Y;
+   private int enemy3Y;
+   private int enemy4Y;
+   private int enemy5Y;
+                 
+   private int bulletY;             
+   private int bulletX;
+                
+   private int enemyMoveAmount;        
+   private int playerMoveAmount;       
+   private int bulletMoveAmount;
+       
+   private int playerScore;         
+   private final static int SCREEN_WIDTH = 300;   
+   
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
      
-   public TimerDemo1()             // default constructor
+   public TimerDemo1()             
    {
-      playerX = 200;                // initial horizontal position of player                
-      enemyX = 60;                  // initial horizontal position of enemy
-     
-      enemyMoveAmount = 5;  
+      playerX = SCREEN_WIDTH / 2 - 10; //10 subtracted to compensate for player width (20).                             
+      enemy1X = 60;                      
+         enemy1MoveAmount = 5;  
       playerMoveAmount = 6;
+      
       bulletMoveAmount = 10;    
-     
-      bulletX = -10;                // initially placing bullet off the screen so its not visible
-      bulletY = 180;
+      bullet1X = -10;                    bullet1Y = 180;
+      
+      
+      
+      
       
       addKeyListener(this);         // necessary to make the KeyListener work correctly
+      
+      
+      
+      
      
-      // enemy moving back and forth horizontally
+   
       enemyTimer = new Timer(100, new ActionListener()
       {
 
          public void actionPerformed(ActionEvent evt)
          {
 
-            if (enemyX <= 0)                 // left boundary  detection for enemy
+            if (enemyX <= 0)            
             {
                enemyMoveAmount = 5;
             }
-            else if (enemyX >= SCREEN_WIDTH - 20) // right boundary detection for enemy
+            else if (enemyX >= SCREEN_WIDTH - 20)
             {
                enemyMoveAmount = -5;
             }
              
-            enemyX += enemyMoveAmount;       // moving enemy horizontally across screen
+            enemyX += enemyMoveAmount;
             repaint();
          }
 
-      });  
+      });
       
-      // player moving back and forth horizontally
+      
+      enemyTimer2 = new Timer(100, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {
+
+            if (enemy2X <= 0)                 
+            {
+               enemy2MoveAmount = 5;
+            }
+            else if (enemy2X >= SCREEN_WIDTH - 20) 
+            {
+               enemy2MoveAmount = -5;
+            }
+             
+            enemyX += enemyMoveAmount;       
+            repaint();
+         }
+
+      });
+              
+      
+      
       playerTimer = new Timer(100, new ActionListener()
       {
 
          public void actionPerformed(ActionEvent evt)
          {
 
-            if (playerX <= 0)                   // left boundary detection for player
+            if (playerX <= 0)                   
             {
                playerMoveAmount = 6;
             }
-            else if (playerX >= SCREEN_WIDTH - 20)   // right boundary detection for player - subtracted 20 to compensate for player size
+            else if (playerX >= SCREEN_WIDTH - 20)   
             {
                playerMoveAmount = -6;
             }
              
-            playerX += playerMoveAmount;        // moving player horizontally across screen
+            playerX += playerMoveAmount;        
             repaint();
          }
 
       });  
        
-      // bullet moving up the screen
+      
       timerBullet = new Timer(50, new ActionListener()
       {
 
          public void actionPerformed(ActionEvent evt)
          {            
-            bulletY -= bulletMoveAmount;        // moving bullet vertically up the screen
+            bulletY -= bulletMoveAmount;        
            
-            // detecting collision with enemy
-            if (bulletX >= enemyX && bulletX <= enemyX + 20 // within the width of the enemy
-                           && bulletY <= 10 && bulletY >= 0)// within the vertical span of the enemy
+            
+            if (bulletX >= enemyX && bulletX <= enemyX + 20 
+                           && bulletY <= 10 && bulletY >= 0)
             {
                playerScore++;
-               timerBullet.stop();              // stop bullet immediately to avoid double score                         
+               timerBullet.stop();                                       
             }
-            else if (bulletY <= 0)              // bullet boundary detection at top of screen
+            else if (bulletY <= 0)              
             {
                timerBullet.stop();
             }
@@ -111,13 +161,16 @@ public class TimerDemo1 extends JFrame implements KeyListener
       g.setColor(Color.gray);
       g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_WIDTH);         // repaint background
      
-      g.setColor(Color.black);                              // repaint enemy at top of screen
+      g.setColor(Color.black);                              // repaint enemy 1
       g.fillRect(enemyX, 20, 20, 20);
           
       g.setColor(Color.blue);                               // repaint player at bottom of screen  
       g.fillRect(playerX, 200, 20, 20);
                                       
       g.fillRect(bulletX - 2, bulletY, 4, 10);  // repaint bullet
+      
+      
+      
           
       g.setColor(Color.black);                              // update status
       g.drawString("score: " + playerScore, 30, 250);
@@ -129,7 +182,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
       // space bar shoots the bullet
       if (key.getKeyChar() == ' ' && !timerBullet.isRunning())
       {
-         bulletX = playerX;     // line up bullet horizontally with current position of player
+         bulletX = playerX;     
          bulletY = 180;          
          timerBullet.start();
       }
@@ -145,6 +198,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
       prog.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       prog.setSize(SCREEN_WIDTH, SCREEN_WIDTH);
       prog.setVisible(true);
+      
    }// end of main method
 
 }// end of class
