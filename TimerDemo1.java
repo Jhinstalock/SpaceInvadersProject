@@ -34,69 +34,139 @@ public class TimerDemo1 extends JFrame implements KeyListener
    private int bulletMoveAmount;
        
    private int playerScore;         
-   private final static int SCREEN_WIDTH = 300;   
+   private final static int SCREEN_WIDTH = 300;
+   private final static int SCREEN_HEIGHT = 600;
+   private final static int PLAYER_WIDTH = 20;
+   private final static int PLAYER_HEIGHT = 20;   
+   private final static int ENEMY_HEIGHT = 20;
+   private final static int ENEMY_WIDTH = 20;
    
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
      
    public TimerDemo1()             
    {
-      playerX = SCREEN_WIDTH / 2 - 10; //10 subtracted to compensate for player width (20).                             
-      enemy1X = 60;                      
-         enemy1MoveAmount = 5;  
+      playerX = SCREEN_WIDTH / 2 - 10; //10 subtracted to compensate for player width (20). 
+                                  
+      enemy1X = -20
+      enemy2X = -20
+      enemy3X = -20
+      enemy4X = -20
+      enemy5X = -20
+                           
+      enemyMoveAmount = 5;  
       playerMoveAmount = 6;
       
       bulletMoveAmount = 10;    
       bullet1X = -10;                    bullet1Y = 180;
       
-      
-      
-      
-      
       addKeyListener(this);         // necessary to make the KeyListener work correctly
-      
-      
-      
-      
-     
+                             
    
-      enemyTimer = new Timer(100, new ActionListener()
+      enemy1Timer = new Timer(100, new ActionListener()
       {
 
          public void actionPerformed(ActionEvent evt)
          {
-
-            if (enemyX <= 0)            
+            if (enemy1X < 0)
             {
-               enemyMoveAmount = 5;
+               enemy1X = (int) (Math.random() * (SCREEN_WIDTH - ENEMY_WIDTH));
             }
-            else if (enemyX >= SCREEN_WIDTH - 20)
+            else 
             {
-               enemyMoveAmount = -5;
+               enemy1Y += enemyMoveAmount;
             }
-             
-            enemyX += enemyMoveAmount;
+            if enemy1Y > (SCREEN_HEIGHT - 30);
+            {
+               gameOver();
+            }      
             repaint();
          }
 
       });
       
-      
-      enemyTimer2 = new Timer(100, new ActionListener()
+      enemy2Timer = new Timer(100, new ActionListener()
       {
 
          public void actionPerformed(ActionEvent evt)
          {
+            if (enemy2X < 0)
+            {
+               enemy2X = (int) (Math.random() * (SCREEN_WIDTH - ENEMY_WIDTH));
+            }
+            else 
+            {
+               enemy2Y += enemyMoveAmount;
+            }
+            if enemy2Y > (SCREEN_HEIGHT - 30);
+            {
+               gameOver();
+            }      
+            repaint();
+         }
 
-            if (enemy2X <= 0)                 
+      });
+      
+      enemy3Timer = new Timer(100, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {
+            if (enemy3X < 0)
             {
-               enemy2MoveAmount = 5;
+               enemy3X = (int) (Math.random() * (SCREEN_WIDTH - ENEMY_WIDTH));
             }
-            else if (enemy2X >= SCREEN_WIDTH - 20) 
+            else 
             {
-               enemy2MoveAmount = -5;
+               enemy3Y += enemyMoveAmount;
             }
-             
-            enemyX += enemyMoveAmount;       
+            if enemy3Y > (SCREEN_HEIGHT - 30);
+            {
+               gameOver();
+            }      
+            repaint();
+         }
+
+      });
+
+      enemy4Timer = new Timer(100, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {
+            if (enemy4X < 0)
+            {
+               enemy4X = (int) (Math.random() * (SCREEN_WIDTH - ENEMY_WIDTH));
+            }
+            else 
+            {
+               enemy4Y += enemyMoveAmount;
+            }
+            if enemy4Y > (SCREEN_HEIGHT - 30);
+            {
+               gameOver();
+            }      
+            repaint();
+         }
+
+      });
+
+      enemy5Timer = new Timer(100, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {
+            if (enemy5X < 0)
+            {
+               enemy5X = (int) (Math.random() * (SCREEN_WIDTH - ENEMY_WIDTH));
+            }
+            else 
+            {
+               enemy5Y += enemyMoveAmount;
+            }
+            if enemy5Y > (SCREEN_HEIGHT - 30);
+            {
+               gameOver();
+            }      
             repaint();
          }
 
@@ -154,6 +224,18 @@ public class TimerDemo1 extends JFrame implements KeyListener
       enemyTimer.start();
       playerTimer.start();
    }
+   
+   public void gameOver()
+   {
+      enemy1Timer.stop
+      enemy2Timer.stop
+      enemy3Timer.stop
+      enemy4Timer.stop
+      enemy5Timer.stop
+      timerBullet.stop
+      
+      System.out.println("You lose." + " Your score was: " + playerScore);
+   }
 
    public void paint(Graphics g)
    {
@@ -165,7 +247,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
       g.fillRect(enemyX, 20, 20, 20);
           
       g.setColor(Color.blue);                               // repaint player at bottom of screen  
-      g.fillRect(playerX, 200, 20, 20);
+      g.fillRect(playerX, 200, PLAYER_WIDTH, PLAYER_HEIGHT);
                                       
       g.fillRect(bulletX - 2, bulletY, 4, 10);  // repaint bullet
       
