@@ -70,8 +70,8 @@ public class TimerDemo1 extends JFrame implements KeyListener
                            
       enemyMoveAmount = 5;  
       playerMoveAmount = 6;
-      
-      bulletMoveAmount = 10;    
+      bulletMoveAmount = 10; 
+         
       bullet1X = -10;                    
       bullet1Y = SCREEN_HEIGHT - 120; //ADJUST IF NECESSARY
       bullet2X = -10;                    
@@ -380,7 +380,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
       });
 
 
-      playerTimer.start();
+
    }
    
    public void gameOver()
