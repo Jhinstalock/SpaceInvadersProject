@@ -4,6 +4,12 @@ import javax.swing.*;
 
 public class TimerDemo1 extends JFrame implements KeyListener
 {
+   private boolean gameStarted = false;
+   private int gameStarter; 
+   
+   private Timer gameStart;
+   private Timer sendEnemies;
+   
    private Timer enemy1Timer;
    private Timer enemy2Timer;
    private Timer enemy3Timer;
@@ -18,7 +24,8 @@ public class TimerDemo1 extends JFrame implements KeyListener
    private Timer bullet4Timer;
    private Timer bullet5Timer;
           
-   private int playerX; //don't need a Y - player moves horizontally only.
+   private int playerX;
+   private int playerY = SCREEN_HEIGHT - 30;
                 
    private int enemy1X;
    private int enemy2X;
@@ -73,15 +80,15 @@ public class TimerDemo1 extends JFrame implements KeyListener
       bulletMoveAmount = 10; 
          
       bullet1X = -10;                    
-      bullet1Y = SCREEN_HEIGHT - 120; //ADJUST IF NECESSARY
+      bullet1Y = SCREEN_HEIGHT - 40; //ADJUST IF NECESSARY
       bullet2X = -10;                    
-      bullet2Y = SCREEN_HEIGHT - 120; //ADJUST IF NECESSARY
+      bullet2Y = SCREEN_HEIGHT - 40; //ADJUST IF NECESSARY
       bullet3X = -10;                    
-      bullet3Y = SCREEN_HEIGHT - 120; //ADJUST IF NECESSARY
+      bullet3Y = SCREEN_HEIGHT - 40; //ADJUST IF NECESSARY
       bullet4X = -10;                    
-      bullet4Y = SCREEN_HEIGHT - 120; //ADJUST IF NECESSARY
+      bullet4Y = SCREEN_HEIGHT - 40; //ADJUST IF NECESSARY
       bullet5X = -10;                    
-      bullet5Y = SCREEN_HEIGHT - 120; //ADJUST IF NECESSARY
+      bullet5Y = SCREEN_HEIGHT - 40; //ADJUST IF NECESSARY
       
       addKeyListener(this);         // necessary to make the KeyListener work correctly
                              
@@ -229,27 +236,18 @@ public class TimerDemo1 extends JFrame implements KeyListener
 
          public void actionPerformed(ActionEvent evt)
          {            
-            bullet1Y -= bulletMoveAmount;        
-           
-            
-            if
-               ( 
-               (bullet1X >= enemy1X && bullet1X <= enemy1X + ENEMY_WIDTH && bullet1Y >= enemy1Y && bullet1Y <= enemy1Y + ENEMY_HEIGHT) || 
-               (bullet1X >= enemy2X && bullet1X <= enemy2X + ENEMY_WIDTH && bullet1Y >= enemy2Y && bullet1Y <= enemy2Y + ENEMY_HEIGHT) || 
-               (bullet1X >= enemy3X && bullet1X <= enemy3X + ENEMY_WIDTH && bullet1Y >= enemy3Y && bullet1Y <= enemy3Y + ENEMY_HEIGHT) || 
-               (bullet1X >= enemy4X && bullet1X <= enemy4X + ENEMY_WIDTH && bullet1Y >= enemy4Y && bullet1Y <= enemy4Y + ENEMY_HEIGHT) || 
-               (bullet1X >= enemy5X && bullet1X <= enemy5X + ENEMY_WIDTH && bullet1Y >= enemy5Y && bullet1Y <= enemy5Y + ENEMY_HEIGHT)
-               ) 
-            {
-               playerScore++;
-               bullet1Timer.stop();                                       
-            }
+            bullet1Y -= bulletMoveAmount;
+                                        
+            if (bullet1X >= enemy1X && bullet1X <= enemy1X + ENEMY_WIDTH && bullet1Y >= enemy1Y && bullet1Y <= enemy1Y + ENEMY_HEIGHT){enemy1Timer.stop();bullet1Timer.stop();}                           
+            else if (bullet1X >= enemy2X && bullet1X <= enemy2X + ENEMY_WIDTH && bullet1Y >= enemy2Y && bullet1Y <= enemy2Y + ENEMY_HEIGHT){enemy2Timer.stop();bullet1Timer.stop();}  
+            else if (bullet1X >= enemy3X && bullet1X <= enemy3X + ENEMY_WIDTH && bullet1Y >= enemy3Y && bullet1Y <= enemy3Y + ENEMY_HEIGHT){enemy3Timer.stop();bullet1Timer.stop();} 
+            else if (bullet1X >= enemy4X && bullet1X <= enemy4X + ENEMY_WIDTH && bullet1Y >= enemy4Y && bullet1Y <= enemy4Y + ENEMY_HEIGHT){enemy4Timer.stop();bullet1Timer.stop();}  
+            else if (bullet1X >= enemy5X && bullet1X <= enemy5X + ENEMY_WIDTH && bullet1Y >= enemy5Y && bullet1Y <= enemy5Y + ENEMY_HEIGHT){enemy5Timer.stop();bullet1Timer.stop();}          
             else if (bullet1Y <= 0)              
             {
                bullet1Timer.stop();
             }
-             
-           
+                        
             repaint();
          }
 
@@ -263,24 +261,16 @@ public class TimerDemo1 extends JFrame implements KeyListener
             bullet2Y -= bulletMoveAmount;        
            
             
-            if 
-               ( 
-               (bullet2X >= enemy1X && bullet2X <= enemy1X + ENEMY_WIDTH && bullet2Y >= enemy1Y && bullet2Y <= enemy1Y + ENEMY_HEIGHT) || 
-               (bullet2X >= enemy2X && bullet2X <= enemy2X + ENEMY_WIDTH && bullet2Y >= enemy2Y && bullet2Y <= enemy2Y + ENEMY_HEIGHT) || 
-               (bullet2X >= enemy3X && bullet2X <= enemy3X + ENEMY_WIDTH && bullet2Y >= enemy3Y && bullet2Y <= enemy3Y + ENEMY_HEIGHT) || 
-               (bullet2X >= enemy4X && bullet2X <= enemy4X + ENEMY_WIDTH && bullet2Y >= enemy4Y && bullet2Y <= enemy4Y + ENEMY_HEIGHT) || 
-               (bullet2X >= enemy5X && bullet2X <= enemy5X + ENEMY_WIDTH && bullet2Y >= enemy5Y && bullet2Y <= enemy5Y + ENEMY_HEIGHT)
-               ) 
-            {
-               playerScore++;
-               bullet2Timer.stop();                                       
-            }
+            if (bullet2X >= enemy1X && bullet2X <= enemy1X + ENEMY_WIDTH && bullet2Y >= enemy1Y && bullet2Y <= enemy1Y + ENEMY_HEIGHT){enemy1Timer.stop();bullet2Timer.stop();}                           
+            else if (bullet2X >= enemy2X && bullet2X <= enemy2X + ENEMY_WIDTH && bullet2Y >= enemy2Y && bullet2Y <= enemy2Y + ENEMY_HEIGHT){enemy2Timer.stop();bullet2Timer.stop();}  
+            else if (bullet2X >= enemy3X && bullet2X <= enemy3X + ENEMY_WIDTH && bullet2Y >= enemy3Y && bullet2Y <= enemy3Y + ENEMY_HEIGHT){enemy3Timer.stop();bullet2Timer.stop();} 
+            else if (bullet2X >= enemy4X && bullet2X <= enemy4X + ENEMY_WIDTH && bullet2Y >= enemy4Y && bullet2Y <= enemy4Y + ENEMY_HEIGHT){enemy4Timer.stop();bullet2Timer.stop();}  
+            else if (bullet2X >= enemy5X && bullet2X <= enemy5X + ENEMY_WIDTH && bullet2Y >= enemy5Y && bullet2Y <= enemy5Y + ENEMY_HEIGHT){enemy5Timer.stop();bullet2Timer.stop();}          
             else if (bullet2Y <= 0)              
             {
                bullet2Timer.stop();
             }
-             
-           
+                        
             repaint();
          }
 
@@ -294,23 +284,15 @@ public class TimerDemo1 extends JFrame implements KeyListener
             bullet3Y -= bulletMoveAmount;        
            
             
-            if
-               ( 
-               (bullet3X >= enemy1X && bullet3X <= enemy1X + ENEMY_WIDTH && bullet3Y >= enemy1Y && bullet3Y <= enemy1Y + ENEMY_HEIGHT) || 
-               (bullet3X >= enemy2X && bullet3X <= enemy2X + ENEMY_WIDTH && bullet3Y >= enemy2Y && bullet3Y <= enemy2Y + ENEMY_HEIGHT) || 
-               (bullet3X >= enemy3X && bullet3X <= enemy3X + ENEMY_WIDTH && bullet3Y >= enemy3Y && bullet3Y <= enemy3Y + ENEMY_HEIGHT) || 
-               (bullet3X >= enemy4X && bullet3X <= enemy4X + ENEMY_WIDTH && bullet3Y >= enemy4Y && bullet3Y <= enemy4Y + ENEMY_HEIGHT) || 
-               (bullet3X >= enemy5X && bullet3X <= enemy5X + ENEMY_WIDTH && bullet3Y >= enemy5Y && bullet3Y <= enemy5Y + ENEMY_HEIGHT)
-               )             
-            {
-               playerScore++;
-               bullet3Timer.stop();                                       
-            }
+            if (bullet3X >= enemy1X && bullet3X <= enemy1X + ENEMY_WIDTH && bullet3Y >= enemy1Y && bullet3Y <= enemy1Y + ENEMY_HEIGHT){enemy1Timer.stop();bullet3Timer.stop();}                           
+            else if (bullet3X >= enemy2X && bullet3X <= enemy2X + ENEMY_WIDTH && bullet3Y >= enemy2Y && bullet3Y <= enemy2Y + ENEMY_HEIGHT){enemy2Timer.stop();bullet3Timer.stop();}  
+            else if (bullet3X >= enemy3X && bullet3X <= enemy3X + ENEMY_WIDTH && bullet3Y >= enemy3Y && bullet3Y <= enemy3Y + ENEMY_HEIGHT){enemy3Timer.stop();bullet3Timer.stop();} 
+            else if (bullet3X >= enemy4X && bullet3X <= enemy4X + ENEMY_WIDTH && bullet3Y >= enemy4Y && bullet3Y <= enemy4Y + ENEMY_HEIGHT){enemy4Timer.stop();bullet3Timer.stop();}  
+            else if (bullet3X >= enemy5X && bullet3X <= enemy5X + ENEMY_WIDTH && bullet3Y >= enemy5Y && bullet3Y <= enemy5Y + ENEMY_HEIGHT){enemy5Timer.stop();bullet3Timer.stop();}
             else if (bullet3Y <= 0)              
             {
                bullet3Timer.stop();
-            }
-             
+            }             
            
             repaint();
          }
@@ -325,24 +307,16 @@ public class TimerDemo1 extends JFrame implements KeyListener
             bullet4Y -= bulletMoveAmount;        
            
             
-            if 
-               ( 
-               (bullet4X >= enemy1X && bullet4X <= enemy1X + ENEMY_WIDTH && bullet4Y >= enemy1Y && bullet4Y <= enemy1Y + ENEMY_HEIGHT) || 
-               (bullet4X >= enemy2X && bullet4X <= enemy2X + ENEMY_WIDTH && bullet4Y >= enemy2Y && bullet4Y <= enemy2Y + ENEMY_HEIGHT) || 
-               (bullet4X >= enemy3X && bullet4X <= enemy3X + ENEMY_WIDTH && bullet4Y >= enemy3Y && bullet4Y <= enemy3Y + ENEMY_HEIGHT) || 
-               (bullet4X >= enemy4X && bullet4X <= enemy4X + ENEMY_WIDTH && bullet4Y >= enemy4Y && bullet4Y <= enemy4Y + ENEMY_HEIGHT) || 
-               (bullet4X >= enemy5X && bullet4X <= enemy5X + ENEMY_WIDTH && bullet4Y >= enemy5Y && bullet4Y <= enemy5Y + ENEMY_HEIGHT)
-               )            
-            {
-               playerScore++;
-               bullet4Timer.stop();                                       
-            }
+            if (bullet4X >= enemy1X && bullet4X <= enemy1X + ENEMY_WIDTH && bullet4Y >= enemy1Y && bullet4Y <= enemy1Y + ENEMY_HEIGHT){enemy1Timer.stop();bullet4Timer.stop();}                           
+            else if (bullet4X >= enemy2X && bullet4X <= enemy2X + ENEMY_WIDTH && bullet4Y >= enemy2Y && bullet4Y <= enemy2Y + ENEMY_HEIGHT){enemy2Timer.stop();bullet4Timer.stop();}  
+            else if (bullet4X >= enemy3X && bullet4X <= enemy3X + ENEMY_WIDTH && bullet4Y >= enemy3Y && bullet4Y <= enemy3Y + ENEMY_HEIGHT){enemy3Timer.stop();bullet4Timer.stop();} 
+            else if (bullet4X >= enemy4X && bullet4X <= enemy4X + ENEMY_WIDTH && bullet4Y >= enemy4Y && bullet4Y <= enemy4Y + ENEMY_HEIGHT){enemy4Timer.stop();bullet4Timer.stop();}  
+            else if (bullet4X >= enemy5X && bullet4X <= enemy5X + ENEMY_WIDTH && bullet4Y >= enemy5Y && bullet4Y <= enemy5Y + ENEMY_HEIGHT){enemy5Timer.stop();bullet4Timer.stop();}
             else if (bullet4Y <= 0)              
             {
                bullet4Timer.stop();
             }
-             
-           
+                        
             repaint();
          }
 
@@ -356,32 +330,67 @@ public class TimerDemo1 extends JFrame implements KeyListener
             bullet5Y -= bulletMoveAmount;        
            
             
-            if
-               ( 
-               (bullet5X >= enemy1X && bullet5X <= enemy1X + ENEMY_WIDTH && bullet5Y >= enemy1Y && bullet5Y <= enemy1Y + ENEMY_HEIGHT) || 
-               (bullet5X >= enemy2X && bullet5X <= enemy2X + ENEMY_WIDTH && bullet5Y >= enemy2Y && bullet5Y <= enemy2Y + ENEMY_HEIGHT) || 
-               (bullet5X >= enemy3X && bullet5X <= enemy3X + ENEMY_WIDTH && bullet5Y >= enemy3Y && bullet5Y <= enemy3Y + ENEMY_HEIGHT) || 
-               (bullet5X >= enemy4X && bullet5X <= enemy4X + ENEMY_WIDTH && bullet5Y >= enemy4Y && bullet5Y <= enemy4Y + ENEMY_HEIGHT) || 
-               (bullet5X >= enemy5X && bullet5X <= enemy5X + ENEMY_WIDTH && bullet5Y >= enemy5Y && bullet5Y <= enemy5Y + ENEMY_HEIGHT)
-               ) 
-            {
-               playerScore++;
-               bullet5Timer.stop();                                       
-            }
+            if (bullet5X >= enemy1X && bullet5X <= enemy1X + ENEMY_WIDTH && bullet5Y >= enemy1Y && bullet5Y <= enemy1Y + ENEMY_HEIGHT){enemy1Timer.stop();bullet5Timer.stop();}                           
+            else if (bullet5X >= enemy2X && bullet5X <= enemy2X + ENEMY_WIDTH && bullet5Y >= enemy2Y && bullet5Y <= enemy2Y + ENEMY_HEIGHT){enemy2Timer.stop();bullet5Timer.stop();}  
+            else if (bullet5X >= enemy3X && bullet5X <= enemy3X + ENEMY_WIDTH && bullet5Y >= enemy3Y && bullet5Y <= enemy3Y + ENEMY_HEIGHT){enemy3Timer.stop();bullet5Timer.stop();} 
+            else if (bullet5X >= enemy4X && bullet5X <= enemy4X + ENEMY_WIDTH && bullet5Y >= enemy4Y && bullet5Y <= enemy4Y + ENEMY_HEIGHT){enemy4Timer.stop();bullet5Timer.stop();}  
+            else if (bullet5X >= enemy5X && bullet5X <= enemy5X + ENEMY_WIDTH && bullet5Y >= enemy5Y && bullet5Y <= enemy5Y + ENEMY_HEIGHT){enemy5Timer.stop();bullet5Timer.stop();}
             else if (bullet5Y <= 0)              
             {
                bullet5Timer.stop();
-            }
-             
+            }          
            
             repaint();
          }
 
       });
 
-
-
-   }
+      gameStart = new Timer(10000, new ActionListener()
+      {
+         public void actionPerformed(ActionEvent evt)
+         {
+            gameStarter++;
+            if (gameStarted == false)
+               {
+                  if (gameStarter >= 2)
+                     {
+                        gameStarted = true;
+                        sendEnemies.start(); //STARTS THE GAME A FEW SECONDS AFTER LOAD.
+                        gameStart.stop();
+                     }
+               }
+         }
+      });
+      
+      
+      sendEnemies = new Timer(2000, new ActionListener()
+      {
+         public void actionPerformed(ActionEvent evt)
+         {
+            if (enemy1Timer.isRunning() == false)
+               {
+                  enemy1Timer.start();
+               }                      
+            else if (enemy2Timer.isRunning() == false)
+               {
+                  enemy2Timer.start();
+               }
+            else if (enemy3Timer.isRunning() == false)
+               {
+                  enemy3Timer.start();
+               }
+            else if (enemy4Timer.isRunning() == false)
+               {
+                  enemy4Timer.start();
+               }
+            else if (enemy5Timer.isRunning() == false)
+               {
+                  enemy5Timer.start();
+               }              
+         }
+      }); 
+               
+   }   
    
    public void gameOver()
    {
@@ -399,7 +408,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
    {
       requestFocus();
       g.setColor(Color.gray);
-      g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_WIDTH);         // repaint background
+      g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);         // repaint background
      
       g.setColor(Color.black);                              // repaint enemy 1
       g.fillRect(enemy1X, enemy1Y, 20, 20);
@@ -413,7 +422,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
       g.fillRect(enemy5X, enemy5Y, 20, 20);
           
       g.setColor(Color.blue);                               // repaint player at bottom of screen  
-      g.fillRect(playerX, 200, PLAYER_WIDTH, PLAYER_HEIGHT);
+      g.fillRect(playerX, (playerY), PLAYER_WIDTH, PLAYER_HEIGHT);
                                       
       g.fillRect(bullet1X - 2, bullet1Y, 4, 10);  // repaint bullet 1    
       g.fillRect(bullet2X - 2, bullet2Y, 4, 10);  // repaint bullet 2
@@ -421,30 +430,52 @@ public class TimerDemo1 extends JFrame implements KeyListener
       g.fillRect(bullet4X - 2, bullet4Y, 4, 10);  // repaint bullet 4
       g.fillRect(bullet5X - 2, bullet5Y, 4, 10);  // repaint bullet 5
       
-          
+      /*    
       g.setColor(Color.black);                              // update status
       g.drawString("score: " + playerScore, 30, 250);
       g.drawString("press spacebar to fire bullet", 10, 280);
+      */
    }
   
    public void keyTyped(KeyEvent key)
-   {
-      // space bar shoots the bullet
-      if (key.getKeyChar() == ' ' && !bullet1Timer.isRunning())
+   {  
+      /*
+      int keyCode = key.getKeyCode();
+      switch( keyCode )
       {
-         bullet1X = playerX;     
-         bullet2Y = SCREEN_HEIGHT - 30; //change the "30" if it's off.          
+         case KeyEvent.VK_LEFT:
+            break;
+         case KeyEvent.VK_RIGHT:
+            break;
+      }
+      */
+      //*
+      if (key.getKeyChar() == KeyEvent.VK_SPACE && !bullet1Timer.isRunning())
+      {  
+         bullet1X = playerX + (PLAYER_WIDTH / 2);     
+         bullet1Y = playerY; //change the "30" if it's off.          
          bullet1Timer.start();
       }
-      if (key.getKeyCode()==37) //Left
+      else if (key.getKeyCode == 97)    //(key.getKeyChar() == KeyEvent.VK_D) //Works for Uppercase //Left
       {
-         System.out.println("Left");
+         System.out.println("a");
+         if (playerX > 0)
+         {
+            playerX -= 5;
+            repaint();
+         }
       }
-      else if (key.getKeyCode()==39) //Right
-      {
-         System.out.println("Right");
+      else if (key.KEY_TYPED == 100)    //(key.getKeyChar()== KeyEvent.VK_A) //Works for Uppercase
+      {  
+         System.out.println("d");
+         if ((playerX + PLAYER_WIDTH) < SCREEN_WIDTH)
+         {
+            playerX += 5;
+            repaint();
+            
+         }
       }
-          
+      //*/    
    }
   
    public void keyPressed(KeyEvent e) { }
