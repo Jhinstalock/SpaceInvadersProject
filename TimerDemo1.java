@@ -4,136 +4,491 @@ import javax.swing.*;
 
 public class TimerDemo1 extends JFrame implements KeyListener
 {
-   private Timer enemyTimer;        // propels top enemy horizontally across screen
-   private Timer playerTimer;       // propels bottom player horizontally across screen
-   private Timer timerBullet;       // propels bottom player's bullet vertically up the screen
-   private int playerX;             // the x location of player
-   private int enemyX;              // the x location of enemy
-   private int bulletY;             // the y location of player's bullet
-   private int bulletX;             // the x location of player's bullet
-   private int enemyMoveAmount;     // the enemy's horizontal move amount in each timer step
-   private int playerMoveAmount;    // the player's horizontal move amount in each timer step
-   private int bulletMoveAmount;    // the bullet's vertical move amount in each timer step
-   private int playerScore;         // player score
-   private final static int SCREEN_WIDTH = 300;   // width of screen
+   private boolean gameStarted = false;
+   private int gameStarter; 
+   
+   private Timer gameStart;
+   private Timer sendEnemies;
+   
+   private Timer enemy1Timer;
+   private Timer enemy2Timer;
+   private Timer enemy3Timer;
+   private Timer enemy4Timer;
+   private Timer enemy5Timer;
+              
+   private Timer playerTimer;
+          
+   private Timer bullet1Timer;
+   private Timer bullet2Timer;
+   private Timer bullet3Timer;
+   private Timer bullet4Timer;
+   private Timer bullet5Timer;
+          
+   private int playerX;
+   private int playerY = SCREEN_HEIGHT - 30;
+                
+   private int enemy1X;
+   private int enemy2X;
+   private int enemy3X;
+   private int enemy4X;
+   private int enemy5X;
+   
+   private int enemy1Y;
+   private int enemy2Y;
+   private int enemy3Y;
+   private int enemy4Y;
+   private int enemy5Y;
+                              
+   private int bullet1X;
+   private int bullet2X;
+   private int bullet3X;
+   private int bullet4X;
+   private int bullet5X;
+   
+   private int bullet1Y;
+   private int bullet2Y;
+   private int bullet3Y;
+   private int bullet4Y;
+   private int bullet5Y;
+                
+   private int enemyMoveAmount;        
+   private int playerMoveAmount;       
+   private int bulletMoveAmount;
+       
+   private int playerScore;         
+   private final static int SCREEN_WIDTH = 300;
+   private final static int SCREEN_HEIGHT = 600;
+   private final static int PLAYER_WIDTH = 20;
+   private final static int PLAYER_HEIGHT = 20;   
+   private final static int ENEMY_HEIGHT = 20;
+   private final static int ENEMY_WIDTH = 20;
+   
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
      
-   public TimerDemo1()             // default constructor
+   public TimerDemo1()             
    {
-      playerX = 200;                // initial horizontal position of player                
-      enemyX = 60;                  // initial horizontal position of enemy
-     
-      enemyMoveAmount = 5;  
-      playerMoveAmount = 6;
-      bulletMoveAmount = 10;    
-     
-      bulletX = -10;                // initially placing bullet off the screen so its not visible
-      bulletY = 180;
+      playerX = SCREEN_WIDTH / 2 - (PLAYER_WIDTH / 2); //10 subtracted to compensate for player width (20). 
+                                  
+      enemy1X = -20;
+      enemy2X = -20;
+      enemy3X = -20;
+      enemy4X = -20;
+      enemy5X = -20;
+      enemy1Y = 30;
+      enemy2Y = 30;
+      enemy3Y = 30;
+      enemy4Y = 30;
+      enemy5Y = 30;
+                           
+      enemyMoveAmount = 10;  
+      playerMoveAmount = 15;
+      bulletMoveAmount = 15; 
+         
+      bullet1X = -10;                    
+      bullet1Y = SCREEN_HEIGHT - 35; //30 because of player position, and 5 for bullet height (half inside player to start
+      bullet2X = -10;                    
+      bullet2Y = SCREEN_HEIGHT - 35; 
+      bullet3X = -10;                    
+      bullet3Y = SCREEN_HEIGHT - 35;
+      bullet4X = -10;                    
+      bullet4Y = SCREEN_HEIGHT - 35;      
+      bullet5X = -10;                    
+      bullet5Y = SCREEN_HEIGHT - 35; 
       
       addKeyListener(this);         // necessary to make the KeyListener work correctly
-     
-      // enemy moving back and forth horizontally
-      enemyTimer = new Timer(100, new ActionListener()
+                             
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+      enemy1Timer = new Timer(100, new ActionListener()
       {
 
          public void actionPerformed(ActionEvent evt)
          {
-
-            if (enemyX <= 0)                 // left boundary  detection for enemy
-            {
-               enemyMoveAmount = 5;
-            }
-            else if (enemyX >= SCREEN_WIDTH - 20) // right boundary detection for enemy
-            {
-               enemyMoveAmount = -5;
-            }
-             
-            enemyX += enemyMoveAmount;       // moving enemy horizontally across screen
+            enemy1Y += enemyMoveAmount;  
             repaint();
+                 
+            if (enemy1Y > (SCREEN_HEIGHT - 30))
+            {
+               gameOver();
+               //System.out.println("Enemy 1's Y value was" + enemy1Y);
+            }                 
+         }
+      });   
+      enemy2Timer = new Timer(100, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {
+            enemy2Y += enemyMoveAmount;  
+            repaint();
+                 
+            if (enemy2Y > (SCREEN_HEIGHT - 30))
+            {
+               gameOver();
+               //System.out.println("Enemy 2's Y value was" + enemy2Y);
+            }                  
          }
 
-      });  
+      });
       
-      // player moving back and forth horizontally
-      playerTimer = new Timer(100, new ActionListener()
+      enemy3Timer = new Timer(100, new ActionListener()
       {
 
          public void actionPerformed(ActionEvent evt)
          {
-
-            if (playerX <= 0)                   // left boundary detection for player
-            {
-               playerMoveAmount = 6;
-            }
-            else if (playerX >= SCREEN_WIDTH - 20)   // right boundary detection for player - subtracted 20 to compensate for player size
-            {
-               playerMoveAmount = -6;
-            }
-             
-            playerX += playerMoveAmount;        // moving player horizontally across screen
+            enemy3Y += enemyMoveAmount;  
             repaint();
+                 
+            if (enemy3Y > (SCREEN_HEIGHT - 30))
+            {
+               gameOver();
+               //System.out.println("Enemy 3's Y value was" + enemy3Y);
+            }                  
          }
 
       });  
-       
-      // bullet moving up the screen
-      timerBullet = new Timer(50, new ActionListener()
+
+      enemy4Timer = new Timer(100, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {
+            enemy4Y += enemyMoveAmount;  
+            repaint();
+                 
+            if (enemy4Y > (SCREEN_HEIGHT - 30))
+            {
+               gameOver();
+               //System.out.println("Enemy 4's Y value was" + enemy4Y);
+            }                  
+         }
+
+      });
+      
+      enemy5Timer = new Timer(100, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {
+            enemy5Y += enemyMoveAmount;  
+            repaint();
+                 
+            if (enemy5Y > (SCREEN_HEIGHT - 30))
+            {
+               gameOver();
+               //System.out.println("Enemy 5's Y value was" + enemy5Y);
+            }                  
+         }
+
+      });
+      
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
+                      
+      bullet1Timer = new Timer(50, new ActionListener()
       {
 
          public void actionPerformed(ActionEvent evt)
          {            
-            bulletY -= bulletMoveAmount;        // moving bullet vertically up the screen
-           
-            // detecting collision with enemy
-            if (bulletX >= enemyX && bulletX <= enemyX + 20 // within the width of the enemy
-                           && bulletY <= 10 && bulletY >= 0)// within the vertical span of the enemy
+            bullet1Y -= bulletMoveAmount;
+                                        
+            if (bullet1X >= enemy1X && bullet1X <= enemy1X + ENEMY_WIDTH && bullet1Y >= enemy1Y && bullet1Y <= enemy1Y + ENEMY_HEIGHT){enemy1Timer.stop();bullet1Timer.stop();enemy1X = -20;enemy1Y = 30;bullet1X = -20;bullet1Y = SCREEN_HEIGHT - 35;playerScore++;}                           
+            else if (bullet1X >= enemy2X && bullet1X <= enemy2X + ENEMY_WIDTH && bullet1Y >= enemy2Y && bullet1Y <= enemy2Y + ENEMY_HEIGHT){enemy2Timer.stop();bullet1Timer.stop();enemy2X = -20;enemy2Y = 30;bullet1X = -20;bullet1Y = SCREEN_HEIGHT - 35;playerScore++;}  
+            else if (bullet1X >= enemy3X && bullet1X <= enemy3X + ENEMY_WIDTH && bullet1Y >= enemy3Y && bullet1Y <= enemy3Y + ENEMY_HEIGHT){enemy3Timer.stop();bullet1Timer.stop();enemy3X = -20;enemy3Y = 30;bullet1X = -20;bullet1Y = SCREEN_HEIGHT - 35;playerScore++;} 
+            else if (bullet1X >= enemy4X && bullet1X <= enemy4X + ENEMY_WIDTH && bullet1Y >= enemy4Y && bullet1Y <= enemy4Y + ENEMY_HEIGHT){enemy4Timer.stop();bullet1Timer.stop();enemy4X = -20;enemy4Y = 30;bullet1X = -20;bullet1Y = SCREEN_HEIGHT - 35;playerScore++;}  
+            else if (bullet1X >= enemy5X && bullet1X <= enemy5X + ENEMY_WIDTH && bullet1Y >= enemy5Y && bullet1Y <= enemy5Y + ENEMY_HEIGHT){enemy5Timer.stop();bullet1Timer.stop();enemy5X = -20;enemy5Y = 30;bullet1X = -20;bullet1Y = SCREEN_HEIGHT - 35;playerScore++;}          
+            else if (bullet1Y <= 0)              
             {
-               playerScore++;
-               timerBullet.stop();              // stop bullet immediately to avoid double score                         
+               bullet1Timer.stop();
+               bullet1Y = SCREEN_HEIGHT - 35;
+               bullet1X = -20;
+               repaint();
             }
-            else if (bulletY <= 0)              // bullet boundary detection at top of screen
-            {
-               timerBullet.stop();
-            }
-             
-           
+                        
             repaint();
          }
 
       });  
+
+      bullet2Timer = new Timer(50, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {            
+            bullet2Y -= bulletMoveAmount;        
            
-      enemyTimer.start();
-      playerTimer.start();
+            
+            if (bullet2X >= enemy1X && bullet2X <= enemy1X + ENEMY_WIDTH && bullet2Y >= enemy1Y && bullet2Y <= enemy1Y + ENEMY_HEIGHT){enemy1Timer.stop();bullet2Timer.stop();enemy1X = -20;enemy1Y = 30;bullet2X = -20;bullet2Y = SCREEN_HEIGHT - 35;playerScore++;}                           
+            else if (bullet2X >= enemy2X && bullet2X <= enemy2X + ENEMY_WIDTH && bullet2Y >= enemy2Y && bullet2Y <= enemy2Y + ENEMY_HEIGHT){enemy2Timer.stop();bullet2Timer.stop();enemy2X = -20;enemy2Y = 30;bullet2X = -20;bullet2Y = SCREEN_HEIGHT - 35;playerScore++;}  
+            else if (bullet2X >= enemy3X && bullet2X <= enemy3X + ENEMY_WIDTH && bullet2Y >= enemy3Y && bullet2Y <= enemy3Y + ENEMY_HEIGHT){enemy3Timer.stop();bullet2Timer.stop();enemy3X = -20;enemy3Y = 30;bullet2X = -20;bullet2Y = SCREEN_HEIGHT - 35;playerScore++;} 
+            else if (bullet2X >= enemy4X && bullet2X <= enemy4X + ENEMY_WIDTH && bullet2Y >= enemy4Y && bullet2Y <= enemy4Y + ENEMY_HEIGHT){enemy4Timer.stop();bullet2Timer.stop();enemy4X = -20;enemy4Y = 30;bullet2X = -20;bullet2Y = SCREEN_HEIGHT - 35;playerScore++;}  
+            else if (bullet2X >= enemy5X && bullet2X <= enemy5X + ENEMY_WIDTH && bullet2Y >= enemy5Y && bullet2Y <= enemy5Y + ENEMY_HEIGHT){enemy5Timer.stop();bullet2Timer.stop();enemy5X = -20;enemy5Y = 30;bullet2X = -20;bullet2Y = SCREEN_HEIGHT - 35;playerScore++;}          
+            else if (bullet2Y <= 0)              
+            {
+               bullet2Timer.stop();
+               bullet2Y = SCREEN_HEIGHT - 35;
+               bullet2X = -20;
+               repaint();
+            }
+                        
+            repaint();
+         }
+
+      });
+
+      bullet3Timer = new Timer(50, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {            
+            bullet3Y -= bulletMoveAmount;        
+           
+            
+            if (bullet3X >= enemy1X && bullet3X <= enemy1X + ENEMY_WIDTH && bullet3Y >= enemy1Y && bullet3Y <= enemy1Y + ENEMY_HEIGHT){enemy1Timer.stop();bullet3Timer.stop();enemy1X = -20;enemy1Y = 30;bullet3X = -20;bullet3Y = SCREEN_HEIGHT - 35;playerScore++;}                           
+            else if (bullet3X >= enemy2X && bullet3X <= enemy2X + ENEMY_WIDTH && bullet3Y >= enemy2Y && bullet3Y <= enemy2Y + ENEMY_HEIGHT){enemy2Timer.stop();bullet3Timer.stop();enemy2X = -20;enemy2Y = 30;bullet3X = -20;bullet3Y = SCREEN_HEIGHT - 35;playerScore++;}  
+            else if (bullet3X >= enemy3X && bullet3X <= enemy3X + ENEMY_WIDTH && bullet3Y >= enemy3Y && bullet3Y <= enemy3Y + ENEMY_HEIGHT){enemy3Timer.stop();bullet3Timer.stop();enemy3X = -20;enemy3Y = 30;bullet3X = -20;bullet3Y = SCREEN_HEIGHT - 35;playerScore++;} 
+            else if (bullet3X >= enemy4X && bullet3X <= enemy4X + ENEMY_WIDTH && bullet3Y >= enemy4Y && bullet3Y <= enemy4Y + ENEMY_HEIGHT){enemy4Timer.stop();bullet3Timer.stop();enemy4X = -20;enemy4Y = 30;bullet3X = -20;bullet3Y = SCREEN_HEIGHT - 35;playerScore++;}  
+            else if (bullet3X >= enemy5X && bullet3X <= enemy5X + ENEMY_WIDTH && bullet3Y >= enemy5Y && bullet3Y <= enemy5Y + ENEMY_HEIGHT){enemy5Timer.stop();bullet3Timer.stop();enemy5X = -20;enemy5Y = 30;bullet3X = -20;bullet3Y = SCREEN_HEIGHT - 35;playerScore++;}          
+            else if (bullet3Y <= 0)              
+            {
+               bullet3Timer.stop();
+               bullet3Y = SCREEN_HEIGHT - 35;
+               bullet3X = -20;
+               repaint();
+            }             
+           
+            repaint();
+         }
+
+      });
+
+      bullet4Timer = new Timer(50, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {            
+            bullet4Y -= bulletMoveAmount;        
+           
+            
+            if (bullet4X >= enemy1X && bullet4X <= enemy1X + ENEMY_WIDTH && bullet4Y >= enemy1Y && bullet4Y <= enemy1Y + ENEMY_HEIGHT){enemy1Timer.stop();bullet4Timer.stop();enemy1X = -20;enemy1Y = 30;bullet4X = -20;bullet4Y = SCREEN_HEIGHT - 35;playerScore++;}                           
+            else if (bullet4X >= enemy2X && bullet4X <= enemy2X + ENEMY_WIDTH && bullet4Y >= enemy2Y && bullet4Y <= enemy2Y + ENEMY_HEIGHT){enemy2Timer.stop();bullet4Timer.stop();enemy2X = -20;enemy2Y = 30;bullet4X = -20;bullet4Y = SCREEN_HEIGHT - 35;playerScore++;}  
+            else if (bullet4X >= enemy3X && bullet4X <= enemy3X + ENEMY_WIDTH && bullet4Y >= enemy3Y && bullet4Y <= enemy3Y + ENEMY_HEIGHT){enemy3Timer.stop();bullet4Timer.stop();enemy3X = -20;enemy3Y = 30;bullet4X = -20;bullet4Y = SCREEN_HEIGHT - 35;playerScore++;} 
+            else if (bullet4X >= enemy4X && bullet4X <= enemy4X + ENEMY_WIDTH && bullet4Y >= enemy4Y && bullet4Y <= enemy4Y + ENEMY_HEIGHT){enemy4Timer.stop();bullet4Timer.stop();enemy4X = -20;enemy4Y = 30;bullet4X = -20;bullet4Y = SCREEN_HEIGHT - 35;playerScore++;}  
+            else if (bullet4X >= enemy5X && bullet4X <= enemy5X + ENEMY_WIDTH && bullet4Y >= enemy5Y && bullet4Y <= enemy5Y + ENEMY_HEIGHT){enemy5Timer.stop();bullet4Timer.stop();enemy5X = -20;enemy5Y = 30;bullet4X = -20;bullet4Y = SCREEN_HEIGHT - 35;playerScore++;}          
+            else if (bullet4Y <= 0)              
+            {
+               bullet4Timer.stop();
+               bullet4Y = SCREEN_HEIGHT - 35;
+               bullet4X = -20;
+               repaint();            }
+                        
+            repaint();
+         }
+
+      });
+
+      bullet5Timer = new Timer(50, new ActionListener()
+      {
+
+         public void actionPerformed(ActionEvent evt)
+         {            
+            bullet5Y -= bulletMoveAmount;        
+           
+            
+            if (bullet5X >= enemy1X && bullet5X <= enemy1X + ENEMY_WIDTH && bullet5Y >= enemy1Y && bullet5Y <= enemy1Y + ENEMY_HEIGHT){enemy1Timer.stop();bullet5Timer.stop();enemy1X = -20;enemy1Y = 30;bullet5X = -20;bullet5Y = SCREEN_HEIGHT - 35;playerScore++;}                           
+            else if (bullet5X >= enemy2X && bullet5X <= enemy2X + ENEMY_WIDTH && bullet5Y >= enemy2Y && bullet5Y <= enemy2Y + ENEMY_HEIGHT){enemy2Timer.stop();bullet5Timer.stop();enemy2X = -20;enemy2Y = 30;bullet5X = -20;bullet5Y = SCREEN_HEIGHT - 35;playerScore++;}  
+            else if (bullet5X >= enemy3X && bullet5X <= enemy3X + ENEMY_WIDTH && bullet5Y >= enemy3Y && bullet5Y <= enemy3Y + ENEMY_HEIGHT){enemy3Timer.stop();bullet5Timer.stop();enemy3X = -20;enemy3Y = 30;bullet5X = -20;bullet5Y = SCREEN_HEIGHT - 35;playerScore++;} 
+            else if (bullet5X >= enemy4X && bullet5X <= enemy4X + ENEMY_WIDTH && bullet5Y >= enemy4Y && bullet5Y <= enemy4Y + ENEMY_HEIGHT){enemy4Timer.stop();bullet5Timer.stop();enemy4X = -20;enemy4Y = 30;bullet5X = -20;bullet5Y = SCREEN_HEIGHT - 35;playerScore++;}  
+            else if (bullet5X >= enemy5X && bullet5X <= enemy5X + ENEMY_WIDTH && bullet5Y >= enemy5Y && bullet5Y <= enemy5Y + ENEMY_HEIGHT){enemy5Timer.stop();bullet5Timer.stop();enemy5X = -20;enemy5Y = 30;bullet5X = -20;bullet5Y = SCREEN_HEIGHT - 35;playerScore++;}          
+            else if (bullet5Y <= 0)              
+            {
+               bullet5Timer.stop();
+               bullet5Y = SCREEN_HEIGHT - 35;
+               bullet5X = -20;
+               repaint();
+            }          
+           
+            repaint();
+         }
+
+      });
+
+      gameStart = new Timer(10000, new ActionListener()
+      {
+         public void actionPerformed(ActionEvent evt)
+         {
+            gameStarter++;
+            if (gameStarted == false)
+               {
+                  if (gameStarter >= 2)
+                     {
+                        gameStarted = true;
+                        sendEnemies.start(); //STARTS THE GAME A FEW SECONDS AFTER LOAD.
+                        gameStart.stop();
+                     }
+               }
+         }
+      });
+      
+      
+      sendEnemies = new Timer(1500, new ActionListener()
+      {
+         public void actionPerformed(ActionEvent evt)
+         {
+            if (enemy1Timer.isRunning() == false)
+               {                //turns into int 0-.99         300           20
+                  enemy1X = (int) (Math.random() * (SCREEN_WIDTH - ENEMY_WIDTH));
+                  enemy1Y = 0 - ENEMY_HEIGHT; 
+                  enemy1Timer.start();
+               }                      
+            else if (enemy2Timer.isRunning() == false)
+               {
+                  enemy2X = (int) (Math.random() * (SCREEN_WIDTH - ENEMY_WIDTH));
+                  enemy2Y = 0 - ENEMY_HEIGHT;
+                  enemy2Timer.start();
+               }
+            else if (enemy3Timer.isRunning() == false)
+               {  
+                  enemy3X = (int) (Math.random() * (SCREEN_WIDTH - ENEMY_WIDTH));
+                  enemy3Y = 0 - ENEMY_HEIGHT;
+                  enemy3Timer.start();
+               }
+            else if (enemy4Timer.isRunning() == false)
+               {
+                  enemy4X = (int) (Math.random() * (SCREEN_WIDTH - ENEMY_WIDTH));
+                  enemy4Y = 0 - ENEMY_HEIGHT;
+                  enemy4Timer.start();
+               }
+            else if (enemy5Timer.isRunning() == false)
+               {
+                  enemy5X = (int) (Math.random() * (SCREEN_WIDTH - ENEMY_WIDTH));
+                  enemy5Y = 0 - ENEMY_HEIGHT;
+                  enemy5Timer.start();
+               }              
+         }
+      }); 
+      
+      
+      gameStart.start();
+      sendEnemies.start();    
+               
+   }   
+   
+   public void gameOver()
+   {
+      enemy1Timer.stop();
+      enemy2Timer.stop();
+      enemy3Timer.stop();
+      enemy4Timer.stop();
+      enemy5Timer.stop();
+      bullet1Timer.stop();
+      enemy1X = -20;
+      enemy1Y = 20;
+      enemy2X = -20;
+      enemy2Y = 20;
+      enemy3X = -20;
+      enemy3Y = 20;
+      enemy4X = -20;
+      enemy4Y = 20;
+      enemy5X = -20;
+      enemy5Y = 20;
+      bullet1Y = SCREEN_HEIGHT - 35;
+      bullet1X = -20;
+      bullet2Y = SCREEN_HEIGHT - 35;
+      bullet1X = -20;
+      bullet3Y = SCREEN_HEIGHT - 35;
+      bullet1X = -20;
+      bullet4Y = SCREEN_HEIGHT - 35;
+      bullet1X = -20;
+      bullet5Y = SCREEN_HEIGHT - 35;
+      bullet1X = -20;
+            
+      System.out.println("You lose." + " Your score was: " + playerScore);
    }
 
    public void paint(Graphics g)
    {
       requestFocus();
       g.setColor(Color.gray);
-      g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_WIDTH);         // repaint background
+      g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);         // repaint background
      
-      g.setColor(Color.black);                              // repaint enemy at top of screen
-      g.fillRect(enemyX, 20, 20, 20);
+      g.setColor(Color.black);                              // repaint enemy 1
+      g.fillRect(enemy1X, enemy1Y, 20, 20);
+      g.setColor(Color.black);                              // repaint enemy 2
+      g.fillRect(enemy2X, enemy2Y, 20, 20);
+      g.setColor(Color.black);                              // repaint enemy 3
+      g.fillRect(enemy3X, enemy3Y, 20, 20);
+      g.setColor(Color.black);                              // repaint enemy 4
+      g.fillRect(enemy4X, enemy4Y, 20, 20);
+      g.setColor(Color.black);                              // repaint enemy 5
+      g.fillRect(enemy5X, enemy5Y, 20, 20);
           
       g.setColor(Color.blue);                               // repaint player at bottom of screen  
-      g.fillRect(playerX, 200, 20, 20);
+      g.fillRect(playerX, (playerY), PLAYER_WIDTH, PLAYER_HEIGHT);
                                       
-      g.fillRect(bulletX - 2, bulletY, 4, 10);  // repaint bullet
+      g.fillRect(bullet1X - 2, bullet1Y, 4, 10);  // repaint bullet 1    
+      g.fillRect(bullet2X - 2, bullet2Y, 4, 10);  // repaint bullet 2
+      g.fillRect(bullet3X - 2, bullet3Y, 4, 10);  // repaint bullet 3
+      g.fillRect(bullet4X - 2, bullet4Y, 4, 10);  // repaint bullet 4
+      g.fillRect(bullet5X - 2, bullet5Y, 4, 10);  // repaint bullet 5
+      
           
       g.setColor(Color.black);                              // update status
-      g.drawString("score: " + playerScore, 30, 250);
-      g.drawString("press spacebar to fire bullet", 10, 280);
+      g.drawString("Score: " + playerScore, 5, SCREEN_HEIGHT - 65);
+      g.drawString("Press Space to Shoot.", 5, SCREEN_HEIGHT - 50);
+      g.drawString("Press A & D to move sideways.", 5, SCREEN_HEIGHT - 35);    
+      
    }
   
    public void keyTyped(KeyEvent key)
-   {
-      // space bar shoots the bullet
-      if (key.getKeyChar() == ' ' && !timerBullet.isRunning())
+   {  
+            
+      if (key.getKeyChar() == 97)    //(key.getKeyChar() == KeyEvent.VK_D) //Works for Uppercase //Left
       {
-         bulletX = playerX;     // line up bullet horizontally with current position of player
-         bulletY = 180;          
-         timerBullet.start();
+         if (playerX > 0)
+         {
+            playerX -= playerMoveAmount;
+            repaint();
+         }
       }
-          
+      else if (key.getKeyChar() == 100)    //(key.getKeyChar()== KeyEvent.VK_A) //Works for Uppercase //Right
+      {         
+         if ((playerX + PLAYER_WIDTH) < SCREEN_WIDTH)
+         {
+            playerX += playerMoveAmount;
+            repaint();
+            
+         }
+      }
+      else if (key.getKeyChar() == KeyEvent.VK_SPACE && !bullet1Timer.isRunning())
+      {  
+         bullet1X = playerX + (PLAYER_WIDTH / 2);     
+         bullet1Y = playerY; //change the "30" if it's off.          
+         bullet1Timer.start();
+      }
+      else if (key.getKeyChar() == KeyEvent.VK_SPACE && !bullet2Timer.isRunning())
+      {  
+         bullet2X = playerX + (PLAYER_WIDTH / 2);     
+         bullet2Y = playerY; //change the "30" if it's off.          
+         bullet2Timer.start();
+      }
+      else if (key.getKeyChar() == KeyEvent.VK_SPACE && !bullet3Timer.isRunning())
+      {  
+         bullet3X = playerX + (PLAYER_WIDTH / 2);     
+         bullet3Y = playerY; //change the "30" if it's off.          
+         bullet3Timer.start();
+      }
+      else if (key.getKeyChar() == KeyEvent.VK_SPACE && !bullet4Timer.isRunning())
+      {  
+         bullet4X = playerX + (PLAYER_WIDTH / 2);     
+         bullet4Y = playerY; //change the "30" if it's off.          
+         bullet4Timer.start();
+      }
+      else if (key.getKeyChar() == KeyEvent.VK_SPACE && !bullet5Timer.isRunning())
+      {  
+         bullet5X = playerX + (PLAYER_WIDTH / 2);     
+         bullet5Y = playerY; //change the "30" if it's off.          
+         bullet5Timer.start();
+      }    
    }
   
    public void keyPressed(KeyEvent e) { }
@@ -143,8 +498,9 @@ public class TimerDemo1 extends JFrame implements KeyListener
    {
       TimerDemo1 prog = new TimerDemo1();
       prog.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      prog.setSize(SCREEN_WIDTH, SCREEN_WIDTH);
+      prog.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
       prog.setVisible(true);
+      
    }// end of main method
 
 }// end of class
