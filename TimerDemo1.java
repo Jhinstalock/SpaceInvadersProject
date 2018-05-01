@@ -9,6 +9,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
    
    private Timer gameStart;
    private Timer sendEnemies;
+   private Timer repaint;
    
    private Timer enemy1Timer;
    private Timer enemy2Timer;
@@ -105,7 +106,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
          public void actionPerformed(ActionEvent evt)
          {
             enemy1Y += enemyMoveAmount;  
-            repaint();
+            //repaint();
                  
             if (enemy1Y > (SCREEN_HEIGHT - 30))
             {
@@ -120,7 +121,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
          public void actionPerformed(ActionEvent evt)
          {
             enemy2Y += enemyMoveAmount;  
-            repaint();
+            //repaint();
                  
             if (enemy2Y > (SCREEN_HEIGHT - 30))
             {
@@ -137,7 +138,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
          public void actionPerformed(ActionEvent evt)
          {
             enemy3Y += enemyMoveAmount;  
-            repaint();
+            //repaint();
                  
             if (enemy3Y > (SCREEN_HEIGHT - 30))
             {
@@ -154,7 +155,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
          public void actionPerformed(ActionEvent evt)
          {
             enemy4Y += enemyMoveAmount;  
-            repaint();
+            //repaint();
                  
             if (enemy4Y > (SCREEN_HEIGHT - 30))
             {
@@ -171,7 +172,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
          public void actionPerformed(ActionEvent evt)
          {
             enemy5Y += enemyMoveAmount;  
-            repaint();
+            //repaint();
                  
             if (enemy5Y > (SCREEN_HEIGHT - 30))
             {
@@ -201,10 +202,10 @@ public class TimerDemo1 extends JFrame implements KeyListener
                bullet1Timer.stop();
                bullet1Y = SCREEN_HEIGHT - 35;
                bullet1X = -20;
-               repaint();
+               //repaint();
             }
                         
-            repaint();
+            //repaint();
          }
 
       });  
@@ -227,10 +228,10 @@ public class TimerDemo1 extends JFrame implements KeyListener
                bullet2Timer.stop();
                bullet2Y = SCREEN_HEIGHT - 35;
                bullet2X = -20;
-               repaint();
+               //repaint();
             }
                         
-            repaint();
+            //repaint();
          }
 
       });
@@ -253,10 +254,10 @@ public class TimerDemo1 extends JFrame implements KeyListener
                bullet3Timer.stop();
                bullet3Y = SCREEN_HEIGHT - 35;
                bullet3X = -20;
-               repaint();
+               //repaint();
             }             
            
-            repaint();
+            //repaint();
          }
 
       });
@@ -279,9 +280,10 @@ public class TimerDemo1 extends JFrame implements KeyListener
                bullet4Timer.stop();
                bullet4Y = SCREEN_HEIGHT - 35;
                bullet4X = -20;
-               repaint();            }
+               //repaint();            
+            }
                         
-            repaint();
+            //repaint();
          }
 
       });
@@ -304,10 +306,10 @@ public class TimerDemo1 extends JFrame implements KeyListener
                bullet5Timer.stop();
                bullet5Y = SCREEN_HEIGHT - 35;
                bullet5X = -20;
-               repaint();
+               //repaint();
             }          
            
-            repaint();
+            //repaint();
          }
 
       });
@@ -365,11 +367,19 @@ public class TimerDemo1 extends JFrame implements KeyListener
                   enemy5Timer.start();
                }              
          }
-      }); 
-      
+      });
+       
+      repaint = new Timer(50, new ActionListener()
+      {
+         public void actionPerformed(ActionEvent evt)
+         {
+            repaint();
+         }   
+      });
       
       gameStart.start();
-      sendEnemies.start();    
+      sendEnemies.start();
+      repaint.start();    
                
    }   
    
@@ -454,7 +464,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
          if (playerX > 0)
          {
             playerX -= playerMoveAmount;
-            repaint();
+            //repaint();
          }
       }
       else if (key.getKeyChar() == 100)    //(key.getKeyChar()== KeyEvent.VK_A) //Works for Uppercase //Right
@@ -462,7 +472,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
          if ((playerX + PLAYER_WIDTH) < SCREEN_WIDTH)
          {
             playerX += playerMoveAmount;
-            repaint();
+            //repaint();
             
          }
       }
