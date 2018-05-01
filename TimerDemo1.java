@@ -330,7 +330,7 @@ public class TimerDemo1 extends JFrame implements KeyListener
       });
       
       
-      sendEnemies = new Timer(1500, new ActionListener()
+      sendEnemies = new Timer(2500, new ActionListener()
       {
          public void actionPerformed(ActionEvent evt)
          {
@@ -374,13 +374,19 @@ public class TimerDemo1 extends JFrame implements KeyListener
    }   
    
    public void gameOver()
-   {
+   {  
+      /*
+      sendEnemies.stop();
       enemy1Timer.stop();
       enemy2Timer.stop();
       enemy3Timer.stop();
       enemy4Timer.stop();
       enemy5Timer.stop();
       bullet1Timer.stop();
+      bullet2Timer.stop();
+      bullet3Timer.stop();
+      bullet4Timer.stop();
+      bullet5Timer.stop();
       enemy1X = -20;
       enemy1Y = 20;
       enemy2X = -20;
@@ -401,8 +407,9 @@ public class TimerDemo1 extends JFrame implements KeyListener
       bullet1X = -20;
       bullet5Y = SCREEN_HEIGHT - 35;
       bullet1X = -20;
-            
+      */      
       System.out.println("You lose." + " Your score was: " + playerScore);
+      System.exit(0);
    }
 
    public void paint(Graphics g)
